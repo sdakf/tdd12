@@ -1,11 +1,18 @@
 package pl.sda.tddtraining;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Customer {
     private final String name;
     private final String lastName;
     private final Integer age;
     private final Integer salary;
     private final Integer id;
+    @Setter(value = AccessLevel.PRIVATE)
     private static int count = 1;
 
     public Customer(String name, String lastName, int age, int salary) {
@@ -19,4 +26,6 @@ public class Customer {
     public Customer(String name, String lastName, int age, String salary) {
         this(name, lastName, age, Integer.valueOf(salary));
     }
+
+
 }
