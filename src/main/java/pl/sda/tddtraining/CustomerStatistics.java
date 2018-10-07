@@ -7,8 +7,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class CustomerStatistics {
     private Customer[] people = new Customer[]{
@@ -68,10 +67,60 @@ public class CustomerStatistics {
                 result.put(customer.getSalary(), Lists.newArrayList(customer));
             }
         }
-        result.put(null,Lists.newArrayList());
+        result.put(null, Lists.newArrayList());
         return result;
     }
-    public Map<Integer, List<Customer>> getCustomersMapBySalaryWithStream(){
+
+    public Map<Integer, List<Customer>> getCustomersMapBySalaryWithStream() {
         return getPeople().stream().collect(groupingBy(c -> c.getSalary()));
-    }  
+    }
+
+    //    5. Napisz metodę, która zwróci statystykę
+// ile jest osób z danymi zarobkami <zarobki,liczba_osób>
+    public Map<Integer, Integer> getNumberOfPersonWithTheSameSalary() {
+        Map<Integer, Integer> result = Maps.newHashMap();
+        for (Customer person : getPeople()) {
+            checkIfSalaryExistAndPopulate(person, result);
+        }
+        return result;
+    }
+
+    public Map<Integer, Long> getNumberOfPersonWithTheSameSalaryWithStream() {
+        return getPeople().stream().collect(groupingBy(c -> c.getSalary(), counting()));
+    }
+
+    //    6. Napisz metodę, która zwróci
+// mapę map <imię,<zarobki,liczba_osób_z_takimi_zarobkami>>
+    public Map<String, Map<Integer, Integer>> getMapOfMapsWithSalary() {
+        Map<String, Map<Integer, Integer>> result = Maps.newHashMap();
+        for (Customer person : getPeople()) {
+            if (result.containsKey(person.getName())) {
+                Map<Integer, Integer> innerMap = result.get(person.getName());
+                checkIfSalaryExistAndPopulate(person, innerMap);
+
+            } else {
+                HashMap<Integer, Integer> innerMap = Maps.newHashMap();
+                innerMap.put(person.getSalary(), 1);
+                result.put(person.getName(), innerMap);
+            }
+        }
+        return result;
+    }
+
+    public Map<String, Map<Integer, Long>> getMapOfMapsWithSalaryWithStream() {
+        return getPeople().stream().collect(
+                groupingBy(c -> c.getName(),
+                        groupingBy(c -> c.getSalary(), counting())));
+    }
+
+    private void checkIfSalaryExistAndPopulate(Customer person, Map<Integer, Integer> innerMap) {
+        if (innerMap.containsKey(person.getSalary())) {
+            Integer counter = innerMap.get(person.getSalary()) + 1;
+            innerMap.put(person.getSalary(), counter);
+        } else {
+            innerMap.put(person.getSalary(), 1);
+        }
+    }
+
+
 }
