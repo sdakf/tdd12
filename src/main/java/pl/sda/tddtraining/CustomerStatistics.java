@@ -1,10 +1,10 @@
 package pl.sda.tddtraining;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public class CustomerStatistics {
     private Customer[] people = new Customer[]{
@@ -32,10 +32,24 @@ public class CustomerStatistics {
         }
         return result;
     }
+
     public List<String> getPeopleNamesWithStream() {
         return getPeople().stream()
                 .map(customer -> customer.getName().trim() + " " + customer.getLastName().trim())
                 .collect(Collectors.toList());
     }
 
+    //    3. Napisz metodę, która zwróci mapę osób <id,osoba>
+    public Map<Integer, Customer> returnListOfCustomersAsMap() {
+        Map<Integer, Customer> result = new HashMap<>();
+        for (Customer person : getPeople()) {
+            result.put(person.getId(), person);
+        }
+
+        return result;
+    }
+
+    public Map<Integer, Customer> returnListOfCustomersAsMapWithStream() {
+        return getPeople().stream().collect(toMap(c->c.getId(),c->c));
+    }
 }

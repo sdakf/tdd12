@@ -3,6 +3,7 @@ package pl.sda.tddtraining;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @Setter
@@ -25,6 +26,19 @@ public class Customer {
 
     public Customer(String name, String lastName, int age, String salary) {
         this(name, lastName, age, Integer.valueOf(salary));
+    }
+
+    public String getCustomerNameWithLastName() {
+        String tempName = getName();
+        if (tempName == null) {
+            tempName = "";
+        }
+        String tempLastName = getLastName() == null ? "" : getLastName();
+        return tempName.trim() + " " + tempLastName.trim();
+    }
+
+    public String getCustomerNameWithLastNameWithStringUtils() {
+        return StringUtils.defaultIfBlank(getName(),"").trim();
     }
 
 
