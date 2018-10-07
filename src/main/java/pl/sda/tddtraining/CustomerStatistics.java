@@ -1,9 +1,13 @@
 package pl.sda.tddtraining;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 public class CustomerStatistics {
@@ -50,6 +54,24 @@ public class CustomerStatistics {
     }
 
     public Map<Integer, Customer> returnListOfCustomersAsMapWithStream() {
-        return getPeople().stream().collect(toMap(c->c.getId(),c->c));
+        return getPeople().stream().collect(toMap(c -> c.getId(), c -> c));
     }
+    //    4. Napisz metodę, która zwróci mapę osób
+// według zarobków <zarobki,osoby_z_zarobkami>
+
+    public Map<Integer, List<Customer>> getCustomersMapBySalary() {
+        Map<Integer, List<Customer>> result = Maps.newHashMap();
+        for (Customer customer : getPeople()) {
+            if (result.containsKey(customer.getSalary())) {
+                result.get(customer.getSalary()).add(customer);
+            } else {
+                result.put(customer.getSalary(), Lists.newArrayList(customer));
+            }
+        }
+        result.put(null,Lists.newArrayList());
+        return result;
+    }
+    public Map<Integer, List<Customer>> getCustomersMapBySalaryWithStream(){
+        return getPeople().stream().collect(groupingBy(c -> c.getSalary()));
+    }  
 }

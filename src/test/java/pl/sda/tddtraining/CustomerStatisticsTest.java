@@ -1,8 +1,10 @@
 package pl.sda.tddtraining;
 
+import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,5 +39,13 @@ class CustomerStatisticsTest {
 
         assertEquals("Marek Nowak", customersMap.get(3).getCustomerNameWithLastName());
         assertEquals("Monika Kos", customersAsMapWithStream.get(5).getCustomerNameWithLastName());
+    }
+
+    @Test
+    void shouldPopulateCustomersMapBySalary() {
+        Map<Integer, List<Customer>> customersMapBySalary = customerStatistics.getCustomersMapBySalary();
+
+        assertEquals(2,customersMapBySalary.get(1200).size());
+
     }
 }

@@ -38,8 +38,11 @@ public class Customer {
     }
 
     public String getCustomerNameWithLastNameWithStringUtils() {
-        return StringUtils.defaultIfBlank(getName(),"").trim();
+        return StringUtils.defaultIfBlank(getName(), "").trim()
+                +(StringUtils.isBlank(getName())?"":" ")
+                +StringUtils.defaultIfBlank(getLastName(), "").trim();
     }
+
 
 
 }

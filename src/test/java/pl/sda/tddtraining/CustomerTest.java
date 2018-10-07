@@ -12,7 +12,7 @@ class CustomerTest {
         Customer nullNameCustomer = new Customer(null,"Jarkowski",38,1974);
 
         String nameWithLastName = nullNameCustomer.getCustomerNameWithLastName();
-  
+
         Assertions.assertEquals("Jarkowski",nameWithLastName);
     }
 }
