@@ -60,4 +60,44 @@ class StringCalculatorTest {
         Assertions.assertEquals(3,result);
     }
 
+    @Test
+    void shouldReturnNumberWhenSecondNumberIsMissing() {
+        String data =  "1,";
+
+        int result = StringCalculator.adding(data);
+
+        Assertions.assertEquals(1,result);
+    }
+
+    @Test
+    void shouldReturnSumOfThreeNumbers() {
+        String data =  "1,2 , 8";
+
+        int result = StringCalculator.adding(data);
+
+        Assertions.assertEquals(11,result);
+    }
+
+    @Test
+    void shouldReturnSumOfNumbersWithNewLinesAsSeparator() {
+        String data =  "1,2 , 8\n 1,2";
+
+        int result = StringCalculator.adding(data);
+
+        Assertions.assertEquals(14,result);
+    }
+
+
+    @Test
+    void shouldReturnSumOfNumbersWithCustomDelimiter() {
+        String data =  "//;\n1;2";
+
+        int result = StringCalculator.adding(data);
+
+        Assertions.assertEquals(3,result);
+    }
+
+
+
+
 }
