@@ -9,6 +9,19 @@ public class StringCalculator {
         if (StringUtils.isBlank(data)) {
             return 0;
         }
+        if (data.contains(",")) {
+            String[] splitted = data.split(",");
+            int sum = 0;
+            for (String s : splitted) {
+                if (StringUtils.isNotBlank(s)) {
+                    sum = sum + Integer.parseInt(s.trim());
+                }
+            }
+            return sum;
+        }
+
         return Integer.parseInt(data.trim());
+
     }
+
 }

@@ -51,4 +51,13 @@ class StringCalculatorTest {
         Assertions.assertEquals(0,result);
     }
 
+    @Test
+    void shouldReturnSumOnTwoNumbers() {
+        String data =  "1,2";
+
+        int result = StringCalculator.adding(data);
+
+        Assertions.assertEquals(3,result);
+    }
+
 }
